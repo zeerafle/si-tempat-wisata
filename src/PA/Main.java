@@ -76,10 +76,8 @@ public class Main {
                         String Nama = input.readLine();
                         System.out.print("Masukkan Tempat Wisata : ");
                         String Tempat = input.readLine();
-                        System.out.print("Masukkan Harga Wisata  : ");
-                        int Harga = Integer.parseInt(input.readLine());
-                        System.out.print("Masukkan Rating Wisata : ");
-                        double Rating = Double.parseDouble(input.readLine());
+                        int Harga = cekInputAngka("Masukkan Harga Wisata  : ", input, "Harga harus angka");
+                        double Rating = cekInputRentang("Masukkan Rating Wisata : ", input);
                         System.out.print("Masukkan Deskripsi Wisata : ");
                         String Desk = input.readLine();
                         dataPantai.add(new Pantai(Desk,Nama,Tempat,Harga,Rating));
@@ -150,6 +148,7 @@ public class Main {
                         System.out.println("Menu Tidak Ada");
                     }
                     break;
+                // Menu ubah
                 case 3:
                     System.out.println("");
                     System.out.println("1. Pantai ");
@@ -270,6 +269,38 @@ public class Main {
                 case 5:
                     System.exit(0);
                     break;
+            }
+        }
+}
+public static int cekInputAngka(String perintah, BufferedReader input, String pesan) {
+        int penampung;
+
+        while (true) {
+            try {
+                System.out.print(perintah);
+                penampung = Integer.parseInt(input.readLine());
+                return penampung;
+            } catch (Exception e) {
+                // System.out.println(pesan);
+            }
+        }
+}
+
+public static double cekInputRentang(String perintah, BufferedReader input) {
+        double penampung;
+
+        while (true) {
+            try {
+                System.out.print(perintah);
+                penampung = Double.parseDouble(input.readLine());
+
+                if (penampung <= 5.0 && penampung >= 1.0) {
+                    return penampung;
+                } else {
+                    System.out.println("Rating berkisar 1 sampai 5");
+                }
+            } catch (Exception e) {
+//                System.out.println("");
             }
         }
 }
