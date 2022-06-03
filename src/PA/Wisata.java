@@ -1,33 +1,21 @@
+package PA;
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package pa;
-
-/**
- *
- * @author Hp
- */
-
 public abstract class Wisata {
     protected String Nama,Tempat;
     protected int harga;
-    protected int id;
     protected double rating;
     protected final String Negara = "Indonesia";
     
-    public Wisata(int id,String Nama, String Tempat, int harga, double rating) {
-        this.id=id;
+    public Wisata(String Nama, String Tempat, int harga, double rating) {
         this.Nama = Nama;
         this.Tempat = Tempat;
         this.harga = harga;
         this.rating = rating;
     }
-
-    public int getId() {
-        return id;
-    }    
 
     public String getNama() {
         return Nama;
@@ -43,10 +31,6 @@ public abstract class Wisata {
 
     public String getTempat() {
         return Tempat;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setNama(String Nama) {
