@@ -30,9 +30,9 @@ public class Main {
                 case 1 :
                     Alex.log_in();
                 case 2 :
-                    System.out.println("");
+                    System.out.println();
                     System.out.println("Menu Ini Masih Dalamm Maintenance");
-                    System.out.println("");
+                    System.out.println();
                     break;
                 case 3:
                     Alex.log_out();
@@ -49,7 +49,7 @@ public class Main {
         dataTaman.add(new Taman("Salah satu taman kota yang menarik di Kota Balikpapan yang memiliki ukuran yang sangat luas","Taman 5 Generasi","Balikpapan",0,4.6));
         dataHutan.add(new Hutan("Hutan yang banyak akarnya","Hutan Mangrove","Balikpapan",30000,4.6));
             while(true){
-            System.out.println("");
+            System.out.println();
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("| |    :     PUSAT INFORMASI    | |");
             System.out.println("| | No :      WISATA KALTIM     | |");
@@ -62,214 +62,221 @@ public class Main {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.print(" || Pilih Menu : " );
             int menu = Integer.parseInt(input.readLine());
-            switch (menu){
-                case 1:
-                    System.out.println("");
-                    System.out.println("1. Pantai ");
-                    System.out.println("2. Taman ");
-                    System.out.println("3. Hutan");
-                    System.out.println("");
-                    System.out.print("Pilih Menu : ");
-                    int pilih = Integer.parseInt(input.readLine());
-                    if  (pilih == 1){
-                        System.out.print("Masukkan Nama Wisata   : ");
-                        String Nama = input.readLine();
-                        System.out.print("Masukkan Tempat Wisata : ");
-                        String Tempat = input.readLine();
-                        int Harga = cekInputAngka("Masukkan Harga Wisata  : ", input, "Harga harus angka");
-                        double Rating = cekInputRentang("Masukkan Rating Wisata : ", input);
-                        System.out.print("Masukkan Deskripsi Wisata : ");
-                        String Desk = input.readLine();
-                        dataPantai.add(new Pantai(Desk,Nama,Tempat,Harga,Rating));
-                        System.out.println("");
-                        Wisata.tambah();
-                        System.out.println("");
-                    } else if (pilih == 2){
-                        System.out.print("Masukkan Nama Wisata   : ");
-                        String Nama = input.readLine();
-                        System.out.print("Masukkan Tempat Wisata : ");
-                        String Tempat = input.readLine();
-                        System.out.print("Masukkan Harga Wisata  : ");
-                        int Harga = Integer.parseInt(input.readLine());
-                        System.out.print("Masukkan Rating Wisata : ");
-                        double Rating = Double.parseDouble(input.readLine());
-                        System.out.print("Masukkan Deskripsi Wisata : ");
-                        String Desk = input.readLine();
-                        dataTaman.add(new Taman(Desk,Nama,Tempat,Harga,Rating));
-                        System.out.println("");
-                        Wisata.tambah();
-                        System.out.println("");
-                    } else if(pilih == 3){
-                        System.out.print("Masukkan Nama Wisata   : ");
-                        String Nama = input.readLine();
-                        System.out.print("Masukkan Tempat Wisata : ");
-                        String Tempat = input.readLine();
-                        System.out.print("Masukkan Harga Wisata  : ");
-                        int Harga = Integer.parseInt(input.readLine());
-                        System.out.print("Masukkan Rating Wisata : ");
-                        double Rating = Double.parseDouble(input.readLine());
-                        System.out.print("Masukkan Deskripsi Wisata : ");
-                        String Desk = input.readLine();
-                        dataHutan.add(new Hutan(Desk,Nama,Tempat,Harga,Rating));
-                        System.out.println("");
-                        Wisata.tambah();
-                        System.out.println("");
-                    } else{
-                        System.out.println("Menu Tidak Ada");
-                    }
-                    break;
-                case 2:
-                    System.out.println("");
-                    System.out.println("1. Pantai ");
-                    System.out.println("2. Taman ");
-                    System.out.println("3. Hutan");
-                    System.out.println("");
-                    System.out.print("Pilih Menu : ");
-                    int pilih1 = Integer.parseInt(input.readLine());
-                    if  (pilih1 == 1){
-                        for(int i = 0; i < dataPantai.size(); i++){
-                            System.out.println("");
-                            System.out.println("Wisata Ke - " + (i + 1));
-                            dataPantai.get(i).display();
+                switch (menu) {
+                    case 1 -> {
+                        System.out.println();
+                        System.out.println("1. Pantai ");
+                        System.out.println("2. Taman ");
+                        System.out.println("3. Hutan");
+                        System.out.println();
+                        System.out.print("Pilih Menu : ");
+                        int pilih = Integer.parseInt(input.readLine());
+                        if (pilih == 1) {
+                            System.out.print("Masukkan Nama Wisata   : ");
+                            String Nama = input.readLine();
+                            System.out.print("Masukkan Tempat Wisata : ");
+                            String Tempat = input.readLine();
+                            int Harga = cekInputAngka("Masukkan Harga Wisata  : ", input, "Harga harus angka");
+                            double Rating = cekInputRentang("Masukkan Rating Wisata : ", input);
+                            System.out.print("Masukkan Deskripsi Wisata : ");
+                            String Desk = input.readLine();
+                            dataPantai.add(new Pantai(Desk, Nama, Tempat, Harga, Rating));
+                            System.out.println();
+                            Wisata.tambah();
+                            System.out.println();
+                        } else if (pilih == 2) {
+                            System.out.print("Masukkan Nama Wisata   : ");
+                            String Nama = input.readLine();
+                            System.out.print("Masukkan Tempat Wisata : ");
+                            String Tempat = input.readLine();
+                            System.out.print("Masukkan Harga Wisata  : ");
+                            int Harga = Integer.parseInt(input.readLine());
+                            System.out.print("Masukkan Rating Wisata : ");
+                            double Rating = Double.parseDouble(input.readLine());
+                            System.out.print("Masukkan Deskripsi Wisata : ");
+                            String Desk = input.readLine();
+                            dataTaman.add(new Taman(Desk, Nama, Tempat, Harga, Rating));
+                            System.out.println();
+                            Wisata.tambah();
+                            System.out.println();
+                        } else if (pilih == 3) {
+                            System.out.print("Masukkan Nama Wisata   : ");
+                            String Nama = input.readLine();
+                            System.out.print("Masukkan Tempat Wisata : ");
+                            String Tempat = input.readLine();
+                            System.out.print("Masukkan Harga Wisata  : ");
+                            int Harga = Integer.parseInt(input.readLine());
+                            System.out.print("Masukkan Rating Wisata : ");
+                            double Rating = Double.parseDouble(input.readLine());
+                            System.out.print("Masukkan Deskripsi Wisata : ");
+                            String Desk = input.readLine();
+                            dataHutan.add(new Hutan(Desk, Nama, Tempat, Harga, Rating));
+                            System.out.println();
+                            Wisata.tambah();
+                            System.out.println();
+                        } else {
+                            System.out.println("Menu Tidak Ada");
                         }
-                    } else if(pilih1 == 2){
-                            for(int i = 0; i < dataPantai.size(); i++){
-                                System.out.println("");
+                    }
+                    case 2 -> {
+                        System.out.println();
+                        System.out.println("1. Pantai ");
+                        System.out.println("2. Taman ");
+                        System.out.println("3. Hutan");
+                        System.out.println();
+                        System.out.print("Pilih Menu : ");
+                        int pilih1 = Integer.parseInt(input.readLine());
+                        if (pilih1 == 1) {
+                            for (int i = 0; i < dataPantai.size(); i++) {
+                                System.out.println();
+                                System.out.println("Wisata Ke - " + (i + 1));
+                                dataPantai.get(i).display();
+                            }
+                        } else if (pilih1 == 2) {
+                            for (int i = 0; i < dataPantai.size(); i++) {
+                                System.out.println();
                                 System.out.println("Wisata Ke - " + (i + 1));
                                 dataTaman.get(i).display();
                             }
-                    } else if (pilih1 == 3){
-                            for(int i = 0; i < dataPantai.size(); i++){
-                                System.out.println("");
+                        } else if (pilih1 == 3) {
+                            for (int i = 0; i < dataPantai.size(); i++) {
+                                System.out.println();
                                 System.out.println("Wisata Ke - " + (i + 1));
                                 dataHutan.get(i).display();
                             }
-                    } else {
-                        System.out.println("Menu Tidak Ada");
+                        } else {
+                            System.out.println("Menu Tidak Ada");
+                        }
                     }
-                    break;
-                // Menu ubah
-                case 3:
-                    System.out.println("");
-                    System.out.println("1. Pantai ");
-                    System.out.println("2. Taman ");
-                    System.out.println("3. Hutan");
-                    System.out.println("");
-                    System.out.print("Pilih Menu : ");
-                    int pilih2 = Integer.parseInt(input.readLine());
-                    if (pilih2 == 1){
-                        System.out.print("Masukkan Nama Wisata : ");
-                        String nama = input.readLine();
-                        for (Pantai i : dataPantai){
-                            if(i.getNama().equals(nama)){
-                                System.out.print("Masukkan Nama Wisata Baru : ");
-                                i.setNama(input.readLine());
-                                System.out.print("Masukkan Nama Tempat Baru : ");
-                                i.setTempat(input.readLine());
-                                System.out.print("Masukkan Nama Harga Baru  : ");
-                                i.setHarga(Integer.parseInt(input.readLine()));
-                                System.out.print("Masukkan Nama Rating Baru : ");
-                                i.setRating(Double.parseDouble(input.readLine()));
-                                System.out.print("Masukkan Nama Wahana Baru : ");
-                                i.setDesk(input.readLine());
+                    // Menu ubah
+                    case 3 -> {
+                        System.out.println();
+                        System.out.println("1. Pantai ");
+                        System.out.println("2. Taman ");
+                        System.out.println("3. Hutan");
+                        System.out.println();
+                        System.out.print("Pilih Menu : ");
+                        int pilih2 = Integer.parseInt(input.readLine());
+                        if (pilih2 == 1) {
+                            System.out.print("Masukkan Nama Wisata : ");
+                            String nama = input.readLine();
+                            boolean isKetemu = false;
+                            for (Pantai i : dataPantai) {
+                                if (i.getNama().equals(nama)) {
+                                    System.out.print("Masukkan Nama Wisata Baru : ");
+                                    i.setNama(input.readLine());
+                                    System.out.print("Masukkan Nama Tempat Baru : ");
+                                    i.setTempat(input.readLine());
+                                    System.out.print("Masukkan Nama Harga Baru  : ");
+                                    i.setHarga(Integer.parseInt(input.readLine()));
+                                    System.out.print("Masukkan Nama Rating Baru : ");
+                                    i.setRating(Double.parseDouble(input.readLine()));
+                                    System.out.print("Masukkan Nama Wahana Baru : ");
+                                    i.setDesk(input.readLine());
+                                    isKetemu = true;
+                                    break;
+                                }
                             }
-                        }
-                        System.out.println("");
-                        Wisata.update();
-                        System.out.println("");
-                    } else if (pilih2 == 2){
-                        System.out.print("Masukkan Nama Wisata : ");
-                        String nama = input.readLine();
-                        for (Taman i : dataTaman){
-                            if(i.getNama().equals(nama)){
-                                System.out.print("Masukkan Nama Wisata Baru : ");
-                                i.setNama(input.readLine());
-                                System.out.print("Masukkan Nama Tempat Baru : ");
-                                i.setTempat(input.readLine());
-                                System.out.print("Masukkan Nama Harga Baru  : ");
-                                i.setHarga(Integer.parseInt(input.readLine()));
-                                System.out.print("Masukkan Nama Rating Baru : ");
-                                i.setRating(Double.parseDouble(input.readLine()));
-                                System.out.print("Masukkan Nama Flora Baru : ");
-                                i.setDesk(input.readLine());
+                            if (!isKetemu) {
+                                System.out.println("Data tidak ditemukan");
+                            } else {
+                                System.out.println();
+                                Wisata.update();
+                                System.out.println();
                             }
-                        }
-                        System.out.println("");
-                        Wisata.update();
-                        System.out.println("");
-                    } else if (pilih2 == 3){
-                        System.out.print("Masukkan Nama Wisata : ");
-                        String nama = input.readLine();
-                        for (Hutan i : dataHutan){
-                            if(i.getNama().equals(nama)){
-                                System.out.print("Masukkan Nama Wisata Baru : ");
-                                i.setNama(input.readLine());
-                                System.out.print("Masukkan Nama Tempat Baru : ");
-                                i.setTempat(input.readLine());
-                                System.out.print("Masukkan Nama Harga Baru  : ");
-                                i.setHarga(Integer.parseInt(input.readLine()));
-                                System.out.print("Masukkan Nama Rating Baru : ");
-                                i.setRating(Double.parseDouble(input.readLine()));
-                                System.out.print("Masukkan Nama Flora Baru : ");
-                                i.setDesk(input.readLine());
+
+                        } else if (pilih2 == 2) {
+                            System.out.print("Masukkan Nama Wisata : ");
+                            String nama = input.readLine();
+                            for (Taman i : dataTaman) {
+                                if (i.getNama().equals(nama)) {
+                                    System.out.print("Masukkan Nama Wisata Baru : ");
+                                    i.setNama(input.readLine());
+                                    System.out.print("Masukkan Nama Tempat Baru : ");
+                                    i.setTempat(input.readLine());
+                                    System.out.print("Masukkan Nama Harga Baru  : ");
+                                    i.setHarga(Integer.parseInt(input.readLine()));
+                                    System.out.print("Masukkan Nama Rating Baru : ");
+                                    i.setRating(Double.parseDouble(input.readLine()));
+                                    System.out.print("Masukkan Nama Flora Baru : ");
+                                    i.setDesk(input.readLine());
+                                }
                             }
+                            System.out.println();
+                            Wisata.update();
+                            System.out.println();
+                        } else if (pilih2 == 3) {
+                            System.out.print("Masukkan Nama Wisata : ");
+                            String nama = input.readLine();
+                            for (Hutan i : dataHutan) {
+                                if (i.getNama().equals(nama)) {
+                                    System.out.print("Masukkan Nama Wisata Baru : ");
+                                    i.setNama(input.readLine());
+                                    System.out.print("Masukkan Nama Tempat Baru : ");
+                                    i.setTempat(input.readLine());
+                                    System.out.print("Masukkan Nama Harga Baru  : ");
+                                    i.setHarga(Integer.parseInt(input.readLine()));
+                                    System.out.print("Masukkan Nama Rating Baru : ");
+                                    i.setRating(Double.parseDouble(input.readLine()));
+                                    System.out.print("Masukkan Nama Flora Baru : ");
+                                    i.setDesk(input.readLine());
+                                    break;
+                                }
+                            }
+                            System.out.println();
+                            Wisata.update();
+                            System.out.println();
+                        } else {
+                            System.out.println("Menu Tidak Ada");
                         }
-                        System.out.println("");
-                        Wisata.update();
-                        System.out.println("");
-                    } else{
-                        System.out.println("Menu Tidak Ada");
                     }
-                    break;
-                case 4:
-                    System.out.println("");
-                    System.out.println("1. Pantai ");
-                    System.out.println("2. Taman ");
-                    System.out.println("3. Hutan");
-                    System.out.println("");
-                    System.out.print("Pilih Menu : ");
-                    int pilih3 = Integer.parseInt(input.readLine());
-                    if (pilih3 == 1){
-                        System.out.print("Masukkan Nama Wisata : ");
-                        String Nama = input.readLine();
-                        for (int i = 0; i < dataPantai.size();i++){
-                            if(dataPantai.get(i).getNama().equals(Nama)){
-                                dataPantai.remove(i);
+                    case 4 -> {
+                        System.out.println();
+                        System.out.println("1. Pantai ");
+                        System.out.println("2. Taman ");
+                        System.out.println("3. Hutan");
+                        System.out.println();
+                        System.out.print("Pilih Menu : ");
+                        int pilih3 = Integer.parseInt(input.readLine());
+                        if (pilih3 == 1) {
+                            System.out.print("Masukkan Nama Wisata : ");
+                            String Nama = input.readLine();
+                            for (int i = 0; i < dataPantai.size(); i++) {
+                                if (dataPantai.get(i).getNama().equals(Nama)) {
+                                    dataPantai.remove(i);
+                                }
                             }
-                        }
-                        System.out.println("");
-                        Wisata.hapus();
-                        System.out.println("");
-                    } else if (pilih3 == 2){
-                        System.out.print("Masukkan Nama Wisata : ");
-                        String Nama = input.readLine();
-                        for (int i = 0; i < dataTaman.size();i++){
-                            if(dataTaman.get(i).getNama().equals(Nama)){
-                                dataTaman.remove(i);
+                            System.out.println();
+                            Wisata.hapus();
+                            System.out.println();
+                        } else if (pilih3 == 2) {
+                            System.out.print("Masukkan Nama Wisata : ");
+                            String Nama = input.readLine();
+                            for (int i = 0; i < dataTaman.size(); i++) {
+                                if (dataTaman.get(i).getNama().equals(Nama)) {
+                                    dataTaman.remove(i);
+                                }
                             }
-                        }
-                        System.out.println("");
-                        Wisata.hapus();
-                        System.out.println("");
-                    } else if (pilih3 == 3){
-                        System.out.print("Masukkan Nama Wisata : ");
-                        String Nama = input.readLine();
-                        for (int i = 0; i < dataHutan.size();i++){
-                            if(dataHutan.get(i).getNama().equals(Nama)){
-                                dataHutan.remove(i);
+                            System.out.println();
+                            Wisata.hapus();
+                            System.out.println();
+                        } else if (pilih3 == 3) {
+                            System.out.print("Masukkan Nama Wisata : ");
+                            String Nama = input.readLine();
+                            for (int i = 0; i < dataHutan.size(); i++) {
+                                if (dataHutan.get(i).getNama().equals(Nama)) {
+                                    dataHutan.remove(i);
+                                }
                             }
+                            System.out.println();
+                            Wisata.hapus();
+                            System.out.println();
+                        } else {
+                            System.out.println("Menu Tidak Ada");
                         }
-                        System.out.println("");
-                        Wisata.hapus();
-                        System.out.println("");
-                    } else {
-                        System.out.println("Menu Tidak Ada");
                     }
-                    break;
-                case 5:
-                    System.exit(0);
-                    break;
-            }
+                    case 5 -> System.exit(0);
+                }
         }
 }
 public static int cekInputAngka(String perintah, BufferedReader input, String pesan) {
@@ -300,7 +307,7 @@ public static double cekInputRentang(String perintah, BufferedReader input) {
                     System.out.println("Rating berkisar 1 sampai 5");
                 }
             } catch (Exception e) {
-//                System.out.println("");
+//                System.out.println();
             }
         }
 }
