@@ -5,34 +5,33 @@ package PA;
  */
 
 /**
- *
  * @author raymo
  */
-public final class Taman extends Wisata{
-    private String desk;
+public final class KebunBinatang extends Wisata {
 
-    public Taman(String desk, String Nama, String Tempat, int harga, double rating) {
-        super(Nama, Tempat, harga, rating);
-        this.desk = desk;
+    private String fauna;
+
+    public KebunBinatang(String desk, String Nama, String Tempat, int harga, double rating, String fauna) {
+        super(Nama, Tempat, harga, rating, desk);
+        this.fauna = fauna;
     }
 
-    public String getDesk() {
-        return desk;
+    public String getFauna() {
+        return fauna;
     }
 
-
-    public void setDesk(String desk) {
-        this.desk = desk;
+    public void setFauna(String fauna) {
+        this.fauna = fauna;
     }
 
-    
     @Override
-    public void display(){
+    public void display() {
         System.out.println("Nama : " + this.Nama);
         System.out.println("Tempat : " + this.Tempat);
         System.out.println("Harga : " + this.harga);
         System.out.println("Rating : " + this.rating);
         System.out.println("Deskripsi : " + this.desk);
+        System.out.println("Fauna : " + this.fauna);
         System.out.println("Negara : " + Negara);
     }
 }

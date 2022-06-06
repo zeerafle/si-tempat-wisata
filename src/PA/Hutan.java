@@ -5,32 +5,32 @@ package PA;
  */
 
 /**
- *
  * @author raymo
  */
-public final class Hutan extends Wisata{
-    private String desk;
+public final class Hutan extends Wisata {
+    private String flora;
 
-    public Hutan(String desk, String Nama, String Tempat, int harga, double rating) {
-        super(Nama, Tempat, harga, rating);
-        this.desk = desk;
+    public Hutan(String desk, String Nama, String Tempat, int harga, double rating, String flora) {
+        super(Nama, Tempat, harga, rating, desk);
+        this.flora = flora;
     }
 
-    public String getDesk() {
-        return desk;
+    public String getFlora() {
+        return flora;
     }
 
-    public void setDesk(String desk) {
-        this.desk = desk;
+    public void setFlora(String flora) {
+        this.flora = flora;
     }
 
     @Override
-    public void display(){
+    public void display() {
         System.out.println("Nama : " + this.Nama);
         System.out.println("Tempat : " + this.Tempat);
         System.out.println("Harga : " + this.harga);
         System.out.println("Rating : " + this.rating);
         System.out.println("Deskripsi : " + this.desk);
+        System.out.println("Flora : " + this.flora);
         System.out.println("Negara : " + Negara);
     }
 }
