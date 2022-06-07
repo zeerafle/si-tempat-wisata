@@ -45,10 +45,14 @@ public class Main {
     public static void Menu() throws IOException {
         InputStreamReader prepare = new InputStreamReader(System.in);
         BufferedReader input = new BufferedReader(prepare);
-        ArrayList<Wisata> dataWisata = new ArrayList<>();
-        dataWisata.add(new Pantai("Pantai yang banyak ubur uburnya", "Pantai Manggar", "Balikpapan", 25000, 4.6, "banana but"));
-        dataWisata.add(new KebunBinatang("Salah satu taman kota yang menarik di Kota Balikpapan yang memiliki ukuran yang sangat luas", "Taman 5 Generasi", "Balikpapan", 0, 4.6, ""));
-        dataWisata.add(new Hutan("Hutan yang banyak akarnya", "Hutan Mangrove", "Balikpapan", 30000, 4.6, "banyak"));
+/*
+        dataWisata.add(new Pantai(2,  "Pantai Manggar", "Balikpapan", 25000, 4.6, "banana but", "Pantai yang banyak ubur uburnya"));
+        dataWisata.add(new KebunBinatang(3"Salah satu taman kota yang menarik di Kota Balikpapan yang memiliki ukuran yang sangat luas", "Taman 5 Generasi", "Balikpapan", 0, 4.6, ""));
+        dataWisata.add(new Hutan("Hutan yang banyak akarnya", "Hutan Mangrove", "Balikpapan", 30001, 4.6, "banyak"));
+*/
+        DatabaseWisata database = new DatabaseWisata();
+        ArrayList<Wisata> dataWisata = database.getDataWisata();
+
         while (true) {
             System.out.println();
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -185,17 +189,17 @@ public class Main {
             case "hutan" -> {
                 System.out.print("Masukkan Flora pada Hutan: ");
                 String flora = input.readLine();
-                listData.add(new Hutan(Desk, Nama, Tempat, Harga, Rating, flora));
+//                listData.add(new Hutan(id, Desk, Nama, Tempat, Harga, Rating, flora));
             }
             case "pantai" -> {
                 System.out.print("Masukkan Wahana pada Pantai : ");
                 String wahana = input.readLine();
-                listData.add(new Pantai(Desk, Nama, Tempat, Harga, Rating, wahana));
+//                listData.add(new Pantai(Desk, Nama, Tempat, Harga, Rating, wahana));
             }
             case "kebun binatang" -> {
                 System.out.print("Masukkan fauna pada kebun binatang : ");
                 String fauna = input.readLine();
-                listData.add(new KebunBinatang(Desk, Nama, Tempat, Harga, Rating, fauna));
+//                listData.add(new KebunBinatang(Desk, Nama, Tempat, Harga, Rating, fauna));
             }
         }
         System.out.println();

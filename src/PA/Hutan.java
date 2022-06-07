@@ -10,8 +10,8 @@ package PA;
 public final class Hutan extends Wisata {
     private String flora;
 
-    public Hutan(String desk, String Nama, String Tempat, int harga, double rating, String flora) {
-        super(Nama, Tempat, harga, rating, desk);
+    public Hutan(int id, String Nama, String Tempat, int harga, double rating, String desk, String flora) {
+        super(id, Nama, Tempat, harga, rating, desk);
         this.flora = flora;
     }
 
