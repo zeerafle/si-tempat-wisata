@@ -11,8 +11,8 @@ public final class KebunBinatang extends Wisata {
 
     private String fauna;
 
-    public KebunBinatang(String desk, String Nama, String Tempat, int harga, double rating, String fauna) {
-        super(Nama, Tempat, harga, rating, desk);
+    public KebunBinatang(int id, String Nama, String Tempat, int harga, double rating, String desk, String fauna) {
+        super(id, Nama, Tempat, harga, rating, desk);
         this.fauna = fauna;
     }
 

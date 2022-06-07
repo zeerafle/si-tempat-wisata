@@ -7,8 +7,8 @@ package PA;
 public final class Pantai extends Wisata {
     private String wahana;
 
-    public Pantai(String desk, String Nama, String Tempat, int harga, double rating, String wahana) {
-        super(Nama, Tempat, harga, rating, desk);
+    public Pantai(int id, String Nama, String Tempat, int harga, double rating, String desk, String wahana) {
+        super(id, Nama, Tempat, harga, rating, desk);
         this.wahana = wahana;
     }
 

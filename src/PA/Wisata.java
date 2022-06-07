@@ -6,12 +6,14 @@ package PA;
  */
 public abstract class Wisata {
     protected final String Negara = "Indonesia";
+    protected int id;
     protected String Nama, Tempat;
     protected int harga;
     protected double rating;
     protected String desk;
 
-    public Wisata(String Nama, String Tempat, int harga, double rating, String desk) {
+    public Wisata(int id, String Nama, String Tempat, int harga, double rating, String desk) {
+        this.id = id;
         this.Nama = Nama;
         this.Tempat = Tempat;
         this.harga = harga;
@@ -29,6 +31,14 @@ public abstract class Wisata {
 
     public static void update() {
         System.out.println("Data Berhasil Diubah");
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDesk() {
