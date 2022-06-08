@@ -4,13 +4,14 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DatabaseWisata {
-    private final String url = "jdbc:sqlite:wisata.db";
-    private PreparedStatement pst;
-    private Connection c;
-    private ResultSet rs;
-    private Statement stm;
-    private String sql;
+public class Database {
+
+    protected final String url = "jdbc:sqlite:wisata.db";
+    protected PreparedStatement pst;
+    protected Connection c;
+    protected ResultSet rs;
+    protected Statement stm;
+    protected String sql;
 
     public boolean isDatabaseExists(String dbFilePath) {
         File database = new File(dbFilePath);
@@ -81,8 +82,7 @@ public class DatabaseWisata {
         return wisata;
     }
 
-    public ArrayList<Wisata> DataWisata() {
-        ArrayList<Wisata> wisata = new ArrayList<>();
+    public void dataWisata() {
         try {
             sql = "SELECT * FROM wisata ";
             Connection cn = getKoneksi();
@@ -103,7 +103,6 @@ public class DatabaseWisata {
             System.out.println("Yoo error cok");
         }
 
-        return wisata;
     }
     // TODO bikin method untuk hutan dan kebun
     // public ArrayList<Pantai> getDataPantai() {
@@ -175,7 +174,7 @@ public class DatabaseWisata {
             try {
                 pst.close();
             } catch (SQLException e) {
-                System.out.println(e);
+                System.out.println("Error" + e);
             }
         }
     }
@@ -192,5 +191,104 @@ public class DatabaseWisata {
         }
     }
 
+    public void readPantai() {
+        ArrayList<Wisata> wisata = new ArrayList<>();
+        try {
+            sql = "SELECT * FROM wisata WHERE jenis='pantai'";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            String tabl = "| %-2s | %-25s | %-13s | %-14s | %-7s | %-23s | %-13s | %-14s |%n";
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            while (rs.next()) {
 
+                System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("erorrrrrrrr" + ex);
+
+        }
+    }
+
+    public void readKebun() {
+        try {
+            sql = "SELECT * FROM wisata WHERE jenis='kebun_binatang'";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            String tabl = "| %-2s | %-25s | %-13s | %-14s | %-7s | %-23s | %-13s | %-14s |%n";
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            while (rs.next()) {
+
+                System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("erorrrrrrrr" + ex);
+
+        }
+    }
+
+    public void readHutan() {
+        try {
+            sql = "SELECT * FROM wisata WHERE jenis='hutan'";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            String tabl = "| %-2s | %-25s | %-13s | %-14s | %-7s | %-23s | %-13s | %-14s |%n";
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            while (rs.next()) {
+
+                System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("erorrrrrrrr" + ex);
+
+        }
+    }
+
+    public ArrayList<Visitor> getDataAkun() {
+        ArrayList<Visitor> visitor = new ArrayList<>();
+        try {
+            Connection cn = getKoneksi();
+            stm = cn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM user");
+            while (rs.next()) {
+                visitor.add(new Visitor(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error" + e);
+        } finally {
+            try {
+                rs.close();
+                stm.close();
+            } catch (SQLException ex) {
+                System.out.println("Error set data : " + ex);
+            }
+        }
+        return visitor;
+    }
+
+    public void createDataakun(String nama, String username, String password) {
+        try {
+            sql = "INSERT INTO user (nama, username,password) VALUES (?, ?, ?)";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setString(1, nama);
+            pst.setString(2, username);
+            pst.setString(3, password);
+            pst.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Oops " + e);
+        }
+    }
 }

@@ -14,7 +14,8 @@ public class Main {
         InputStreamReader prepare = new InputStreamReader(System.in);
         BufferedReader input = new BufferedReader(prepare);
         Login admin = new Admin("Kitsu", "Anjay123");
-        User Alex = new User(admin);
+        Database database = new Database();
+        ArrayList<Visitor> dataVisitor = database.getDataAkun();
 
         while (true) {
             System.out.println();
@@ -40,9 +41,39 @@ public class Main {
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     System.out.print("| | Masukkan pilihan : ");
                     String userSignMenu = input.readLine();
+                    switch (userSignMenu) {
+                        case "1":
+                            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                            System.out.print("| | USERNAME : ");
+                            String username = input.readLine();
+                            System.out.print("| | PASSWORD : ");
+                            String password = input.readLine();
+                            for (Visitor visitor : dataVisitor) {
+                                if (visitor.getUsername().equals(username) && visitor.getPassword().equals(password)) {
+                                    Visitor.menu();
+                                }
+                            }
+                            System.out.println("Username atau password salah");
+                            break;
+                        case "2":
+                            System.out.println("+-----------------------------------------------------------+");
+                            System.out.println("|-------------     REGISTRASI USER         -----------------|");
+                            System.out.println("+-----------------------------------------------------------+");
+                            System.out.print("Masukkan Nama            : ");
+                            String nama = input.readLine();
+                            System.out.print("Masukkan Username        : ");
+                            String username1 = input.readLine();
+                            System.out.print("Masukkan Password        : ");
+                            String password1 = input.readLine();
+
+                            database.createDataakun(nama, username1, password1);
+                            dataVisitor = database.getDataAkun();
+                            break;
+                    }
                     break;
                 case 3:
-                    Alex.log_out();
+                    System.out.println("Menutup program");
+                    System.exit(0);
             }
         }
     }
@@ -50,7 +81,7 @@ public class Main {
     public static void Menu() throws IOException {
         InputStreamReader prepare = new InputStreamReader(System.in);
         BufferedReader input = new BufferedReader(prepare);
-        DatabaseWisata database = new DatabaseWisata();
+        Database database = new Database();
         ArrayList<Wisata> wisata = database.getDataWisata();
         /*
          * dataWisata.add(new Pantai(2, "Pantai Manggar", "Balikpapan", 25000, 4.6,
@@ -154,7 +185,7 @@ public class Main {
                     System.out.println("========================================================================================================================================");
                     System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
                     System.out.println("========================================================================================================================================");
-                    database.DataWisata();
+                    database.dataWisata();
                     // System.out.println("\n");
                     // System.out.println("+---------------------------------------------------------+");
                     // System.out.println("|-----------   LIHAT DATA MASING MASING WISATA    --------|");
@@ -214,7 +245,7 @@ public class Main {
                     System.out.println("========================================================================================================================================");
                     System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
                     System.out.println("========================================================================================================================================");
-                    database.DataWisata();
+                    database.dataWisata();
                     System.out.println("\n");
                     System.out.println("+---------------------------------------+");
                     System.out.println("|-----------     HAPUS DATA     --------|");
@@ -224,7 +255,7 @@ public class Main {
                     System.out.println("========================================================================================================================================");
                     System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
                     System.out.println("========================================================================================================================================");
-                    database.DataWisata();
+                    database.dataWisata();
                     break;
 
                 case 5:
