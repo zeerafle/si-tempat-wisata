@@ -21,6 +21,7 @@ public class Database {
     // menghubungkan ke database
     public Connection getKoneksi() {
         String dapatkanJalurFile = new File("").getAbsolutePath();
+//        String jalurAbsolutFile = dapatkanJalurFile.concat("\\wisata.db");
         String jalurAbsolutFile = dapatkanJalurFile.concat("/wisata.db");
         if (isDatabaseExists(jalurAbsolutFile)) {
             try {
@@ -52,12 +53,15 @@ public class Database {
 
         } catch (SQLException e) {
             System.out.println("Oops " + e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
     }
 
-    // TODO bikin satu method aja untuk dapatkan data. Kasi parameter jenis di fungsinya
-    //  if (result.getInt(7) == "hutan") {
-    //                    akun.add(new Hutan())
     public ArrayList<Wisata> getDataWisata() {
         ArrayList<Wisata> wisata = new ArrayList<>();
         try {
@@ -66,17 +70,23 @@ public class Database {
             pst = cn.prepareStatement(sql);
             rs = pst.executeQuery();
             while (rs.next()) {
-                if (rs.getString(7) == "Pantai") {
+                if (rs.getString(7).equals("pantai")) {
                     wisata.add(new Pantai(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-                } else if (rs.getInt(7) == 2) {
+                } else if (rs.getString(7).equals("kebun_binatang")) {
                     wisata.add(new KebunBinatang(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-                } else if (rs.getInt(7) == 3) {
+                } else if (rs.getString(7).equals("hutan")) {
                     wisata.add(new Hutan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
                 }
 
             }
         } catch (SQLException e) {
             System.out.println("Yoo error cok");
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
 
         return wisata;
@@ -90,7 +100,6 @@ public class Database {
             rs = pst.executeQuery();
             String tabl = "| %-2s | %-25s | %-13s | %-14s | %-7s | %-23s | %-13s | %-14s |%n";
 
-
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
             System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
@@ -100,61 +109,17 @@ public class Database {
 
             }
         } catch (SQLException e) {
-            System.out.println("Yoo error cok");
+            System.out.println("Yoo error cok" + e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
 
     }
-    // TODO bikin method untuk hutan dan kebun
-    // public ArrayList<Pantai> getDataPantai() {
-    //     ArrayList<Pantai> wisata = new ArrayList<>();
-    //     try {
-    //         sql = "SELECT * FROM wisata WHERE jenis = pantai";
-    //         Connection cn = getKoneksi();
-    //         pst = cn.prepareStatement(sql);
-    //         rs = pst.executeQuery();
-    //         while (rs.next()) {
-    //             wisata.add(new Pantai(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-    //         }
-    //     } catch (SQLException e) {
-    //         System.out.println("Yoo error cok");
-    //     }
 
-    //     return wisata;
-    // }
-
-    // public ArrayList<Hutan> getDataHutan() {
-    //     ArrayList<Hutan> wisata = new ArrayList<>();
-    //     try {
-    //         sql = "SELECT * FROM wisata WHERE jenis = hutan";
-    //         Connection cn = getKoneksi();
-    //         pst = cn.prepareStatement(sql);
-    //         rs = pst.executeQuery();
-    //         while (rs.next()) {
-    //             wisata.add(new Hutan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-    //         }
-    //     } catch (SQLException e) {
-    //         System.out.println("Yoo error cok");
-    //     }
-
-    //     return wisata;
-    // }
-
-    // public ArrayList<KebunBinatang> getDataKebunBinatang() {
-    //     ArrayList<KebunBinatang> wisata = new ArrayList<>();
-    //     try {
-    //         sql = "SELECT * FROM wisata WHERE jenis = 'kebun_binatang'";
-    //         Connection cn = getKoneksi();
-    //         pst = cn.prepareStatement(sql);
-    //         rs = pst.executeQuery();
-    //         while (rs.next()) {
-    //             wisata.add(new KebunBinatang(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-    //         }
-    //     } catch (SQLException e) {
-    //         System.out.println("Yoo error cok");
-    //     }
-
-    //     return wisata;
-    // }
     public void updateWisata(int id, String nama, String tempat, int harga, double rating,
                              String deskripsi, String spesial) {
         try {
@@ -169,7 +134,7 @@ public class Database {
             pst.setInt(6, id);
             pst.execute();
         } catch (SQLException e) {
-            System.out.println("Mantap Error");
+            System.out.println("Mantap Error" + e);
         } finally {
             try {
                 pst.close();
@@ -188,11 +153,16 @@ public class Database {
             pst.execute();
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
     }
 
     public void readPantai() {
-        ArrayList<Wisata> wisata = new ArrayList<>();
         try {
             sql = "SELECT * FROM wisata WHERE jenis='pantai'";
             Connection cn = getKoneksi();
@@ -210,6 +180,12 @@ public class Database {
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
 
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
     }
 
@@ -231,6 +207,12 @@ public class Database {
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
 
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
     }
 
@@ -251,8 +233,40 @@ public class Database {
             }
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
-
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
+    }
+
+    public void DataUser() {
+        try {
+            sql = "SELECT * FROM User ";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            String tabl = "| %-2s | %-25s | %-13s | %-14s |%n";
+            System.out.format("+----+---------------------------+---------------+----------------+%n");
+            System.out.format("| ID | Nama                      | Username       | Password      |%n");
+            System.out.format("+----+---------------------------+---------------+----------------+%n");
+            while (rs.next()) {
+
+                System.out.format(tabl, rs.getInt(1), rs.getString(4), rs.getString(2), rs.getInt(3));
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Yoo error cok");
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
+        }
+
     }
 
     public ArrayList<Visitor> getDataAkun() {
@@ -289,6 +303,52 @@ public class Database {
 
         } catch (SQLException e) {
             System.out.println("Oops " + e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
+        }
+    }
+
+    public double getWisataRatingById(int id) {
+        double rating = 0;
+        try {
+            sql = "SELECT rating FROM wisata WHERE id = ?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            rating = rs.getDouble(1);
+        } catch (SQLException e) {
+            System.out.println("Error" + e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
+        }
+        return rating;
+    }
+
+    public void setWisataRatingById(int id, double rating) {
+        try {
+            sql = "UPDATE wisata SET rating=? WHERE id=?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setDouble(1, rating);
+            pst.setInt(2, id);
+            pst.execute();
+        } catch (SQLException e) {
+            System.out.println("Mantap Error" + e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println("Error" + e);
+            }
         }
     }
 }

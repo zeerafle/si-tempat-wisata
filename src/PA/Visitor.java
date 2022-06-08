@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Visitor implements Login {
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+    static Database database = new Database();
     private int ID;
     private String username;
     private String password;
@@ -18,8 +20,6 @@ public class Visitor implements Login {
     }
 
     public static void menu() throws IOException {
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
 
         while (true) {
             System.out.println("+-------------------------------------------------------+");
@@ -67,9 +67,41 @@ public class Visitor implements Login {
             } else if (pi == 3) {
                 return;
             }
+            menuLihat();
         }
+    }
 
-        // beri rating
+    public static void menuLihat() throws IOException {
+        System.out.println("1. Beri rating tempat wisata");
+        System.out.println("0. Kembali");
+        System.out.print("Masukkan pilihan : ");
+        String pilihan = input.readLine();
+        switch (pilihan) {
+            case "1":
+                beriRating();
+                break;
+            case "0":
+                break;
+        }
+    }
+
+    public static void beriRating() {
+        boolean inputSalah = true;
+        System.out.print("Masukkan id : ");
+        int id = 0;
+        while (inputSalah) {
+            try {
+                id = Integer.parseInt(input.readLine());
+                inputSalah = false;
+            } catch (Exception e) {
+                System.out.println("Id salah");
+            }
+        }
+        System.out.println();
+        double rating = Main.cekInputRentang("Nilai tempat wisata rentang 1.0 - 5.0 : ", input);
+        double ratingSaatIni = database.getWisataRatingById(id);
+        double ratingBaru = (ratingSaatIni + rating) / 2;
+        database.setWisataRatingById(id, ratingBaru);
     }
 
     public int getID() {

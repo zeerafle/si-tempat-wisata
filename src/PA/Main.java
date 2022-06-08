@@ -83,16 +83,6 @@ public class Main {
         BufferedReader input = new BufferedReader(prepare);
         Database database = new Database();
         ArrayList<Wisata> wisata = database.getDataWisata();
-        /*
-         * dataWisata.add(new Pantai(2, "Pantai Manggar", "Balikpapan", 25000, 4.6,
-         * "banana but", "Pantai yang banyak ubur uburnya"));
-         * dataWisata.add(new KebunBinatang(
-         * 3"Salah satu taman kota yang menarik di Kota Balikpapan yang memiliki ukuran yang sangat luas"
-         * , "Taman 5 Generasi", "Balikpapan", 0, 4.6, ""));
-         * dataWisata.add(new Hutan("Hutan yang banyak akarnya", "Hutan Mangrove",
-         * "Balikpapan", 30001, 4.6, "banyak"));
-         */
-        //
 
         while (true) {
 
@@ -182,44 +172,27 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("========================================================================================================================================");
-                    System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
-                    System.out.println("========================================================================================================================================");
-                    database.dataWisata();
-                    // System.out.println("\n");
-                    // System.out.println("+---------------------------------------------------------+");
-                    // System.out.println("|-----------   LIHAT DATA MASING MASING WISATA    --------|");
-                    // System.out.println("+---------------------------------------------------------+");
-                    // System.out.println("                1. Lihat Data Hutan                       |");
-                    // System.out.println("                2. Lihat Data Taman                       |");
-                    // System.out.println("                3. Lihat Data Pantai                      |");
-                    // System.out.println("                4. Lihat Data user                        |");
-                    // System.out.println("----------------------------------------------------------|");
-                    // System.out.print("Pilih Menu : ");
-                    // int pilih2 = Integer.parseInt(input.readLine());
-                    // if(pilih2 == 1){
-                    //     System.out.println("+-----------------------------------------------------------+");
-                    //     System.out.println("|---------------    LIHAT DATA PANTAI      -----------------|");
-                    //     System.out.println("+-----------------------------------------------------------+");
-                    //     database.DataWisata();
-                    // } else if(pilih2 == 2){
-                    //     System.out.println("+------------------------------------------------------------------+");
-                    //     System.out.println("|---------------    LIHAT DATA KEBUN BINATANG      ---------------|");
-                    //     System.out.println("+------------------------------------------------------------------+");
-                    //     database.DataWisata();
-                    // } else if(pilih2 == 3){
-                    //     System.out.println("+-----------------------------------------------------------+");
-                    //     System.out.println("|---------------    LIHAT DATA HUTAN      ------------------|");
-                    //     System.out.println("+-----------------------------------------------------------+");
-                    //     database.DataWisata();
-                    // } else if(pilih2 == 4){
-                    //     System.out.println("+-----------------------------------------------------------+");
-                    //     System.out.println("|---------------    LIHAT DATA USER      ------------------|");
-                    //     System.out.println("+-----------------------------------------------------------+");
+                    System.out.println("+----------------------------------------------------------------+");
+                    System.out.println("|-----------           LIHAT DATA          --------------|");
+                    System.out.println("+--------------------------------------------------------+");
+                    System.out.println("                1. Lihat Data User                       |");
+                    System.out.println("                2. Lihat Data Wisata                     |");
+                    System.out.println("                3. Kembali                               |");
+                    System.out.println("---------------------------------------------------------|");
+                    System.out.println("Pilih :");
+                    int pil = Integer.parseInt(input.readLine());
 
-                    // } else {
-                    //     System.out.println("Menu Tidak Ada");
-                    // }
+                    if (pil == 1) {
+                        System.out.println("========================================================================================================================================");
+                        System.out.println("|                                                    LIST SELURUH USER                                                                |");
+                        System.out.println("========================================================================================================================================");
+                        database.DataUser();
+                    } else if (pil == 2) {
+                        System.out.println("========================================================================================================================================");
+                        System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
+                        System.out.println("========================================================================================================================================");
+                        database.dataWisata();
+                    }
                     break;
                 // Menu ubah
                 case 3:
@@ -297,36 +270,3 @@ public class Main {
         }
     }
 }
-// public static void tambahData(ArrayList<Wisata> listData, String jenisWisata,
-// BufferedReader input) throws IOException {
-// System.out.print("Masukkan Nama Wisata : ");
-// String Nama = input.readLine();
-// System.out.print("Masukkan Tempat Wisata : ");
-// String Tempat = input.readLine();
-// int Harga = cekInputAngka("Masukkan harga wisata : ", input, "Mohon masukkan
-// angka");
-// double Rating = cekInputRentang("Masukkan Rating Wisata : ", input);
-// System.out.print("Masukkan Deskripsi Wisata : ");
-// String Desk = input.readLine();
-// switch (jenisWisata) {
-// case "hutan" :
-// System.out.print("Masukkan Flora pada Hutan: ");
-// String flora = input.readLine();
-// // listData.add(new Hutan(id, Desk, Nama, Tempat, Harga, Rating, flora));
-
-// case "pantai" :
-// System.out.print("Masukkan Wahana pada Pantai : ");
-// String wahana = input.readLine();
-// // listData.add(new Pantai(Desk, Nama, Tempat, Harga, Rating, wahana));
-
-// case "kebun binatang" :
-// System.out.print("Masukkan fauna pada kebun binatang : ");
-// String fauna = input.readLine();
-// // listData.add(new KebunBinatang(Desk, Nama, Tempat, Harga, Rating, fauna));
-
-// }
-// System.out.println();
-// Wisata.tambah();
-// System.out.println();
-// }
-// }
