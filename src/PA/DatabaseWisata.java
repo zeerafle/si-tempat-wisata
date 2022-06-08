@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DatabaseWisata {
-    private final String url = "jdbc:sqlite:/home/zeerafle/Projects/si-tempat-wisata/wisata.db";
+    private final String url = "jdbc:sqlite:wisata.db";
     private PreparedStatement pst;
     private Connection c;
     private ResultSet rs;
@@ -24,7 +24,7 @@ public class DatabaseWisata {
         if (isDatabaseExists(jalurAbsolutFile)) {
             try {
                 c = DriverManager.getConnection(url);
-                System.out.println("Yey");
+                //System.out.println("Yey");
             } catch (SQLException e) {
                 System.out.println("Error " + e);
             }
@@ -35,11 +35,9 @@ public class DatabaseWisata {
     }
 
     // manajemen tempat wisata
-    public void createPantai(String jenisWisata, String nama, String tempat, int harga, double rating, String deskripsi, String atributKhusus, String nilaiAtributKhusus) {
-        // INSERT INTO wisata (nama, tempat, harga, rating, deskripsi) VALUES ('Manggar', 'Balikpapan', 15000, 1.6, 'bagus');
-        // INSERT INTO pantai (id, wahana) VALUES ((SELECT MAX(id) FROM wisata), 'banana boat');
+    public void createWisata(String jenisWisata, String nama, String tempat, int harga, double rating, String deskripsi, String special) {
         try {
-            sql = "INSERT INTO wisata (nama, tempat, harga, rating, deskripsi) VALUES (?, ?, ?, ?, ?)";
+            sql = "INSERT INTO wisata (nama, tempat, harga, rating, deskripsi, jenis, spesial) VALUES (?, ?, ?, ?, ?, ?, ?)";
             Connection cn = getKoneksi();
             pst = cn.prepareStatement(sql);
             pst.setString(1, nama);
@@ -47,37 +45,34 @@ public class DatabaseWisata {
             pst.setInt(3, harga);
             pst.setDouble(4, rating);
             pst.setString(5, deskripsi);
+            pst.setString(6, jenisWisata);
+            pst.setString(7, special);
             pst.execute();
 
-            // query kedua
-            sql = "INSERT INTO " + jenisWisata + " (id, " + atributKhusus + ") VALUES ((SELECT MAX(id) FROM wisata), ?)";
-            pst = cn.prepareStatement(sql);
-            pst.setString(1, nilaiAtributKhusus);
         } catch (SQLException e) {
             System.out.println("Oops " + e);
         }
     }
 
+    // TODO bikin satu method aja untuk dapatkan data. Kasi parameter jenis di fungsinya
+    //  if (result.getInt(7) == "hutan") {
+    //                    akun.add(new Hutan())
     public ArrayList<Wisata> getDataWisata() {
-        ArrayList<Wisata> dataWisata = new ArrayList<>();
-        dataWisata.addAll(getDataJenisWisata("pantai", "wahana"));
-        dataWisata.addAll(getDataJenisWisata("hutan", "flora"));
-        dataWisata.addAll(getDataJenisWisata("kebun_binatang", "fauna"));
-
-        return dataWisata;
-    }
-
-    // fungsi untuk ngambil semua data dengan jenis spesifik
-    // mengembalikan arraylist bentuk Wisata
-    public ArrayList<Wisata> getDataJenisWisata(String jenisWisata, String atributKhusus) {
         ArrayList<Wisata> wisata = new ArrayList<>();
         try {
-            sql = "SELECT wisata.id, nama, tempat, harga, rating, deskripsi, " + atributKhusus + " FROM wisata INNER JOIN " + jenisWisata + " ON wisata.id = " + jenisWisata + ".id";
+            sql = "SELECT * FROM wisata ";
             Connection cn = getKoneksi();
             pst = cn.prepareStatement(sql);
             rs = pst.executeQuery();
             while (rs.next()) {
-                wisata.add(new Pantai(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+                if (rs.getString(7) == "Pantai") {
+                    wisata.add(new Pantai(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+                } else if (rs.getInt(7) == 2) {
+                    wisata.add(new KebunBinatang(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+                } else if (rs.getInt(7) == 3) {
+                    wisata.add(new Hutan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+                }
+
             }
         } catch (SQLException e) {
             System.out.println("Yoo error cok");
@@ -85,5 +80,117 @@ public class DatabaseWisata {
 
         return wisata;
     }
+
+    public ArrayList<Wisata> DataWisata() {
+        ArrayList<Wisata> wisata = new ArrayList<>();
+        try {
+            sql = "SELECT * FROM wisata ";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            String tabl = "| %-2s | %-25s | %-13s | %-14s | %-7s | %-23s | %-13s | %-14s |%n";
+
+
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            while (rs.next()) {
+
+                System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Yoo error cok");
+        }
+
+        return wisata;
+    }
+    // TODO bikin method untuk hutan dan kebun
+    // public ArrayList<Pantai> getDataPantai() {
+    //     ArrayList<Pantai> wisata = new ArrayList<>();
+    //     try {
+    //         sql = "SELECT * FROM wisata WHERE jenis = pantai";
+    //         Connection cn = getKoneksi();
+    //         pst = cn.prepareStatement(sql);
+    //         rs = pst.executeQuery();
+    //         while (rs.next()) {
+    //             wisata.add(new Pantai(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+    //         }
+    //     } catch (SQLException e) {
+    //         System.out.println("Yoo error cok");
+    //     }
+
+    //     return wisata;
+    // }
+
+    // public ArrayList<Hutan> getDataHutan() {
+    //     ArrayList<Hutan> wisata = new ArrayList<>();
+    //     try {
+    //         sql = "SELECT * FROM wisata WHERE jenis = hutan";
+    //         Connection cn = getKoneksi();
+    //         pst = cn.prepareStatement(sql);
+    //         rs = pst.executeQuery();
+    //         while (rs.next()) {
+    //             wisata.add(new Hutan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+    //         }
+    //     } catch (SQLException e) {
+    //         System.out.println("Yoo error cok");
+    //     }
+
+    //     return wisata;
+    // }
+
+    // public ArrayList<KebunBinatang> getDataKebunBinatang() {
+    //     ArrayList<KebunBinatang> wisata = new ArrayList<>();
+    //     try {
+    //         sql = "SELECT * FROM wisata WHERE jenis = 'kebun_binatang'";
+    //         Connection cn = getKoneksi();
+    //         pst = cn.prepareStatement(sql);
+    //         rs = pst.executeQuery();
+    //         while (rs.next()) {
+    //             wisata.add(new KebunBinatang(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+    //         }
+    //     } catch (SQLException e) {
+    //         System.out.println("Yoo error cok");
+    //     }
+
+    //     return wisata;
+    // }
+    public void updateWisata(int id, String nama, String tempat, int harga, double rating,
+                             String deskripsi, String spesial) {
+        try {
+            sql = "UPDATE wisata SET nama=?, tempat=?, harga=?, deskripsi=?,spesial=? WHERE id=?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setString(1, nama);
+            pst.setString(2, tempat);
+            pst.setInt(3, harga);
+            pst.setString(4, deskripsi);
+            pst.setString(5, spesial);
+            pst.setInt(6, id);
+            pst.execute();
+        } catch (SQLException e) {
+            System.out.println("Mantap Error");
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    public void deleteKelas(int id) {
+        try {
+            sql = "DELETE FROM wisata WHERE id=?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            pst.execute();
+        } catch (SQLException ex) {
+            System.out.println("erorrrrrrrr" + ex);
+        }
+    }
+
 
 }
