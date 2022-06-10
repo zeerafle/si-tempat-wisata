@@ -50,6 +50,8 @@ public class Database {
             pst.setString(6, jenisWisata);
             pst.setString(7, special);
             pst.execute();
+            System.out.println();
+            System.out.println("Berhasil di Tambahkan !");
 
         } catch (SQLException e) {
             System.out.println("Oops " + e);
@@ -133,6 +135,8 @@ public class Database {
             pst.setString(5, spesial);
             pst.setInt(6, id);
             pst.execute();
+            System.out.println();
+            System.out.println("Berhasil di Update !!");
         } catch (SQLException e) {
             System.out.println("Mantap Error" + e);
         } finally {
@@ -300,6 +304,8 @@ public class Database {
             pst.setString(2, username);
             pst.setString(3, password);
             pst.execute();
+            System.out.println();
+            System.out.println("Berhasil di Tambahkan !");
 
         } catch (SQLException e) {
             System.out.println("Oops " + e);
@@ -349,6 +355,57 @@ public class Database {
             } catch (SQLException e) {
                 System.out.println("Error" + e);
             }
+        }
+    }
+
+    public void CreateFavorite(int id_user, int id_wisata) {
+        try {
+            sql = "INSERT INTO favorit (id_user, id_wisata) VALUES (?, ?)";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, id_user);
+            pst.setInt(2, id_wisata);
+            pst.execute();
+            System.out.println();
+            System.out.println("Berhasil di Tambahkan !");
+        } catch (SQLException e) {
+            System.out.println("Oops " + e);
+        }
+    }
+
+    public void readUserFavorite(int idUser) {
+        try {
+            sql = "SELECT id, nama, tempat, harga, rating, deskripsi, jenis, spesial FROM favorit INNER JOIN wisata w on w.id = favorit.id_wisata WHERE id_user = ?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUser);
+            rs = pst.executeQuery();
+            String tabl = "| %-2s | %-25s | %-13s | %-14s | %-7s | %-23s | %-13s | %-14s |%n";
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
+            System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
+            while (rs.next()) {
+
+                System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("erorrrrrrrr" + ex);
+
+        }
+    }
+
+    public void deleteFavorite(int id) {
+        try {
+            sql = "DELETE FROM favorit WHERE id_user = ? ";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            pst.execute();
+            System.out.println();
+            System.out.println("Berhasil di hapus!");
+        } catch (SQLException ex) {
+            System.out.println("erorrrrrrrr" + ex);
         }
     }
 }
