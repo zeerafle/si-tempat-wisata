@@ -52,9 +52,10 @@ public class Main {
                             for (Visitor visitor : dataVisitor) {
                                 if (visitor.getUsername().equals(username) && visitor.getPassword().equals(password)) {
                                     visitor.menu();
+                                } else {
+                                    System.out.println("Username atau password salah");
                                 }
                             }
-                            System.out.println("Username atau password salah");
                             break;
                         case "2":
                             System.out.println("+-----------------------------------------------------------+");
@@ -80,7 +81,7 @@ public class Main {
     }
 
 
-    public static int cekInputAngka(String perintah, BufferedReader input, String pesan) {
+    public static int cekInputAngka(String perintah, BufferedReader input) {
         int penampung;
 
         while (true) {
@@ -90,10 +91,10 @@ public class Main {
                 if (penampung >= 0) {
                     return penampung;
                 } else {
-                    System.out.println("Harga Tidak Boleh Minus");
+                    System.out.println("Nilai Tidak Boleh Minus");
                 }
             } catch (Exception e) {
-                System.out.println("Harga Harus Angka");
+                System.out.println("Nilai Harus Angka");
             }
         }
     }

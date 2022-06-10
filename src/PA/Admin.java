@@ -92,53 +92,47 @@ public class Admin implements User {
                             System.out.println("+-----------------------------------------------------------+");
                             System.out.println("|-------------     TAMBAH DATA PANTAI      -----------------|");
                             System.out.println("+-----------------------------------------------------------+");
-                            String jenisWisata = "pantai";
                             System.out.print("Masukkan Nama Pantai           : ");
                             String nama = input.readLine();
                             System.out.print("Masukkan Lokasi Pantai         : ");
                             String tempat = input.readLine();
-                            int harga = Main.cekInputAngka("Masukkan Harga Tiket  : ", input, "Harga harus angka");
-                            double rating = 0;
+                            int harga = Main.cekInputAngka("Masukkan Harga Tiket           : ", input);
                             System.out.print("Masukkan Deskripsi Pantai      : ");
                             String deskripsi = input.readLine();
                             System.out.print("Masukkan Wahana Pantai         : ");
                             String spesial = input.readLine();
-                            database.createWisata(jenisWisata, nama, tempat, harga, rating, deskripsi, spesial);
+                            database.createWisata("pantai", nama, tempat, harga, deskripsi, spesial);
 
                         } else if (pilih.equals("2")) {
                             System.out.println("+------------------------------------------------------------------+");
                             System.out.println("|---------------    TAMBAH DATA KEBUN BINATANG      ---------------|");
                             System.out.println("+------------------------------------------------------------------+");
-                            String jenisWisata = "kebun_binatang";
                             System.out.print("Masukkan Nama Kebun Binatang   : ");
                             String nama = input.readLine();
                             System.out.print("Masukkan Lokasi                : ");
                             String tempat = input.readLine();
-                            int harga = Main.cekInputAngka("Masukkan Harga Tiket  : ", input, "Harga harus angka");
-                            double rating = 0;
+                            int harga = Main.cekInputAngka("Masukkan Harga Tiket           : ", input);
                             System.out.print("Masukkan Deskripsi Tempat      : ");
                             String deskripsi = input.readLine();
                             System.out.print("Masukkan Fauna Kebun Binatang  : ");
                             String spesial = input.readLine();
 
-                            database.createWisata(jenisWisata, nama, tempat, harga, rating, deskripsi, spesial);
+                            database.createWisata("kebun_binatang", nama, tempat, harga, deskripsi, spesial);
                         } else if (pilih.equals("3")) {
                             System.out.println("+-----------------------------------------------------------+");
                             System.out.println("|-------------     TAMBAH DATA HUTAN      ------------------|");
                             System.out.println("+-----------------------------------------------------------+");
 
-                            String jenisWisata = "hutan";
                             System.out.print("Masukkan Nama Hutan            : ");
                             String nama = input.readLine();
                             System.out.print("Masukkan Lokasi Hutan          : ");
                             String tempat = input.readLine();
-                            int harga = Main.cekInputAngka("Masukkan Harga Tiket  : ", input, "Harga harus angka");
-                            double rating = 0;
+                            int harga = Main.cekInputAngka("Masukkan Harga Tiket           : ", input);
                             System.out.print("Masukkan Deskripsi Hutan       : ");
                             String deskripsi = input.readLine();
-                            System.out.print("Masukkan Fauna                 : ");
+                            System.out.print("Masukkan Flora                 : ");
                             String spesial = input.readLine();
-                            database.createWisata(jenisWisata, nama, tempat, harga, rating, deskripsi, spesial);
+                            database.createWisata("hutan", nama, tempat, harga, deskripsi, spesial);
                         } else if (pilih.equals("4")) {
                             break;
                         } else {
@@ -180,33 +174,29 @@ public class Admin implements User {
                     System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
                     System.out.println("========================================================================================================================================");
                     database.dataWisata();
-                    int id;
-                    while (true) {
-                        id = Main.cekInputAngka("Masukan Id yang ingin di ubah  : ", input, "Harga harus angka");
-                        // cek id ada apa nggak
-                        if (database.isWisataTidakAdaById(id)) {
-                            System.out.println("Data wisata tidak ada");
-                        } else {
-                            break;
-                        }
-                    }
-                    System.out.print("Masukkan Nama Hutan            : ");
-                    String nama = input.readLine();
-                    System.out.print("Masukkan Lokasi Hutan          : ");
-                    String tempat = input.readLine();
-                    int harga = Main.cekInputAngka("Masukkan Harga Tiket  : ", input, "Harga harus angka");
-                    double rating = Main.cekInputRentang("Masukkan Rating : ", input);
-                    System.out.print("Masukkan Deskripsi Hutan       : ");
-                    String deskripsi = input.readLine();
-                    System.out.print("Masukkan Fauna                 : ");
-                    String spesial = input.readLine();
-                    database.updateWisata(id, nama, tempat, harga, rating, deskripsi, spesial);
-                    System.out.println("========================================================================================================================================");
-                    System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
-                    System.out.println("========================================================================================================================================");
-                    database.dataWisata();
+                    int id = Main.cekInputAngka("Masukan Id yang ingin di ubah  : ", input);
+                    // cek id ada apa nggak
+                    if (database.isWisataAdaById(id)) {
+                        System.out.print("Masukkan Nama Wisata           : ");
+                        String nama = input.readLine();
+                        System.out.print("Masukkan Lokasi Wisata         : ");
+                        String tempat = input.readLine();
+                        int harga = Main.cekInputAngka("Masukkan Harga Tiket          : ", input);
+                        System.out.print("Masukkan Deskripsi Wisata      : ");
+                        String deskripsi = input.readLine();
+                        System.out.print("Masukkan Data Tambahan         : ");
+                        String spesial = input.readLine();
+                        database.updateWisata(id, nama, tempat, harga, deskripsi, spesial);
+                        System.out.println("========================================================================================================================================");
+                        System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
+                        System.out.println("========================================================================================================================================");
+                        database.dataWisata();
 
-                    break;
+                        break;
+                    } else {
+                        System.out.println("Data wisata tidak ada");
+                        break;
+                    }
 
                 case "4":
                     System.out.println("========================================================================================================================================");
@@ -217,14 +207,17 @@ public class Admin implements User {
                     System.out.println("+---------------------------------------+");
                     System.out.println("|-----------     HAPUS DATA     --------|");
                     System.out.println("+---------------------------------------+");
-                    int idHapus = Main.cekInputAngka("Masukkan ID yang Ingin Di Hapus  : ", input, "ID Harus Angka");
-                    database.deleteKelas(idHapus);
-                    System.out.println("========================================================================================================================================");
-                    System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
-                    System.out.println("========================================================================================================================================");
-                    database.dataWisata();
+                    int idHapus = Main.cekInputAngka("Masukkan ID yang Ingin Di Hapus  : ", input);
+                    if (database.isWisataAdaById(idHapus)) {
+                        database.deleteWisataById(idHapus);
+                        System.out.println("========================================================================================================================================");
+                        System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
+                        System.out.println("========================================================================================================================================");
+                        database.dataWisata();
+                    } else {
+                        System.out.println("Id tidak ditemukan");
+                    }
                     break;
-
                 case "5":
                     return;
                 default:

@@ -38,7 +38,7 @@ public class Database {
     }
 
     // manajemen tempat wisata
-    public void createWisata(String jenisWisata, String nama, String tempat, int harga, double rating, String deskripsi, String special) {
+    public void createWisata(String jenisWisata, String nama, String tempat, int harga, String deskripsi, String special) {
         try {
             sql = "INSERT INTO wisata (nama, tempat, harga, rating, deskripsi, jenis, spesial) VALUES (?, ?, ?, ?, ?, ?, ?)";
             Connection cn = getKoneksi();
@@ -46,7 +46,7 @@ public class Database {
             pst.setString(1, nama);
             pst.setString(2, tempat);
             pst.setInt(3, harga);
-            pst.setDouble(4, rating);
+            pst.setDouble(4, 0);
             pst.setString(5, deskripsi);
             pst.setString(6, jenisWisata);
             pst.setString(7, special);
@@ -98,8 +98,7 @@ public class Database {
 
     }
 
-    public void updateWisata(int id, String nama, String tempat, int harga, double rating,
-                             String deskripsi, String spesial) {
+    public void updateWisata(int id, String nama, String tempat, int harga, String deskripsi, String spesial) {
         try {
             sql = "UPDATE wisata SET nama=?, tempat=?, harga=?, deskripsi=?,spesial=? WHERE id=?";
             Connection cn = getKoneksi();
@@ -124,7 +123,7 @@ public class Database {
         }
     }
 
-    public void deleteKelas(int id) {
+    public void deleteWisataById(int id) {
         try {
             sql = "DELETE FROM wisata WHERE id=?";
             Connection cn = getKoneksi();
@@ -352,7 +351,7 @@ public class Database {
         }
     }
 
-    public void CreateFavorite(int id_user, int id_wisata) {
+    public void addFavorite(int id_user, int id_wisata) {
         try {
             sql = "INSERT INTO favorit (id_user, id_wisata) VALUES (?, ?)";
             Connection cn = getKoneksi();
@@ -360,8 +359,6 @@ public class Database {
             pst.setInt(1, id_user);
             pst.setInt(2, id_wisata);
             pst.execute();
-            System.out.println();
-            System.out.println("Berhasil di Tambahkan !");
         } catch (SQLException e) {
             System.out.println("Oops " + e);
         }
@@ -392,19 +389,20 @@ public class Database {
         }
     }
 
-    public void deleteFavorite(int id) {
+    public void deleteFavorite(int idUser, int idWisata) {
         try {
-            sql = "DELETE FROM favorit WHERE id_user = ? ";
+            sql = "DELETE FROM favorit WHERE id_user = ? AND id_wisata = ?";
             Connection cn = getKoneksi();
             pst = cn.prepareStatement(sql);
-            pst.setInt(1, id);
+            pst.setInt(1, idUser);
+            pst.setInt(2, idWisata);
             pst.execute();
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
         }
     }
 
-    public boolean isWisataTidakAdaById(int id) {
+    public boolean isWisataAdaById(int id) {
         boolean ada = false;
         try {
             sql = "SELECT * FROM wisata WHERE id = ?";
@@ -419,6 +417,24 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Error " + e);
         }
-        return !ada;
+        return ada;
+    }
+
+    public boolean isWisataSudahAdaDiFavoritUser(int idUser, int idWisata) {
+        boolean ada = false;
+        try {
+            sql = "SELECT * FROM favorit WHERE id_user = ? AND id_wisata = ?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUser);
+            pst.setInt(2, idWisata);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                ada = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
+        }
+        return ada;
     }
 }

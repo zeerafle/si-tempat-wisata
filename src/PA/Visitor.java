@@ -19,69 +19,6 @@ public class Visitor implements User {
         this.nama = nama;
     }
 
-    public static void menuLihat() throws IOException {
-        System.out.println("+--------------------------------------------------------+");
-        System.out.println("|-----------   BERI RATING TEMPAT WISATA    -------------|");
-        System.out.println("+--------------------------------------------------------+");
-        System.out.println("                1. Beri Rating Wisata                    |");
-        System.out.println("                0. Kembali                               |");
-        System.out.println("+--------------------------------------------------------+");
-        System.out.print("Masukkan pilihan : ");
-        String pilihan = input.readLine();
-        switch (pilihan) {
-            case "1":
-                beriRating();
-                break;
-            case "0":
-                break;
-        }
-    }
-
-    public static void beriRating() {
-        boolean inputSalah = true;
-        System.out.println("========================================================================================================================================");
-        System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
-        System.out.println("========================================================================================================================================");
-        database.dataWisata();
-        int id = 0;
-        while (inputSalah) {
-            try {
-                System.out.print("Masukkan id : ");
-                id = Integer.parseInt(input.readLine());
-
-                // cek id ada apa nggak
-                if (database.isWisataTidakAdaById(id)) {
-                    System.out.println("Data wisata tidak ada");
-                    continue;
-                }
-
-                inputSalah = false;
-            } catch (Exception e) {
-                System.out.println("Id salah");
-            }
-        }
-
-        System.out.println();
-        double rating = Main.cekInputRentang("Nilai tempat wisata rentang 1.0 - 5.0 : ", input);
-        double ratingSaatIni = database.getWisataRatingById(id);
-        double ratingBaru = (ratingSaatIni + rating) / 2;
-        database.setWisataRatingById(id, ratingBaru);
-    }
-
-    public static int cekInputAngka(String perintah, BufferedReader input, String pesan) {
-        int penampung;
-
-        while (true) {
-            try {
-                System.out.print(perintah);
-                penampung = Integer.parseInt(input.readLine());
-                return penampung;
-            } catch (Exception e) {
-                // System.out.println(pesan);
-            }
-        }
-    }
-
     @Override
     public void menu() throws IOException {
         while (true) {
@@ -101,6 +38,7 @@ public class Visitor implements User {
                 System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
                 System.out.println("========================================================================================================================================");
                 database.dataWisata();
+                System.out.println();
             } else if (pi.equals("2")) {
                 System.out.println("+--------------------------------------------------------+");
                 System.out.println("|-----------   LIHAT DATA TEMPAT WISATA    --------------|");
@@ -129,14 +67,21 @@ public class Visitor implements User {
                     System.out.println("========================================================================================================================================");
                     database.readHutan();
                 } else if (pil.equals("4")) {
-                    menu();
-                    System.out.println("Menu Visitor!!");
+                    break;
                 }
+                System.out.println();
 
             } else if (pi.equals("3")) {
-                menuLihat();
+                System.out.print("Masukkan id : ");
+                int id = Integer.parseInt(input.readLine());
+                if (database.isWisataAdaById(id)) {
+                    double rating = Main.cekInputRentang("Nilai tempat wisata rentang 1.0 - 5.0 : ", input);
+                    double ratingSaatIni = database.getWisataRatingById(id);
+                    double ratingBaru = (ratingSaatIni + rating) / 2;
+                    database.setWisataRatingById(id, ratingBaru);
+                }
             } else if (pi.equals("4")) {
-                MenuFavorite();
+                menuFavorite();
             } else if (pi.equals("5")) {
                 return;
             } else {
@@ -147,7 +92,7 @@ public class Visitor implements User {
         }
     }
 
-    public void MenuFavorite() throws IOException {
+    public void menuFavorite() throws IOException {
         System.out.println("+--------------------------------------------+");
         System.out.println("|-----------   Menu Favorite    -------------|");
         System.out.println("+--------------------------------------------+");
@@ -163,23 +108,36 @@ public class Visitor implements User {
                 System.out.println("+-----------------------------------------------------------+");
                 System.out.println("|-------------     TAMBAH WISATA FAVORITE        -----------|");
                 System.out.println("+-----------------------------------------------------------+");
-                System.out.print("Masukkan id User         : ");
-                int id_user = Integer.parseInt(input.readLine());
                 System.out.println("========================================================================================================================================");
                 System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
                 System.out.println("========================================================================================================================================");
                 database.dataWisata();
-                System.out.print("Masukkan id Wisata         : ");
-                int id_wisata = Integer.parseInt(input.readLine());
-                database.CreateFavorite(id_user, id_wisata);
+                int idWisata = Main.cekInputAngka("Pilih id Wisata yang di favoritkan : ", input);
+                if (database.isWisataAdaById(idWisata)) {
+                    if (!database.isWisataSudahAdaDiFavoritUser(this.ID, idWisata)) {
+                        database.addFavorite(this.ID, idWisata);
+                        System.out.println();
+                        System.out.println("Berhasil di Tambahkan !");
+                    } else {
+                        System.out.println("Wisata sudah dalam favorit");
+                    }
+                } else {
+                    System.out.println("Id tidak ada");
+                }
 
                 break;
             case "2":
                 database.readUserFavorite(this.ID);
                 break;
             case "3":
-                database.deleteFavorite(this.ID);
-                System.out.println("Favorit dihapus");
+                database.readUserFavorite(this.ID);
+                int idWisataHapus = Main.cekInputAngka("Pilih id Wisata yang ingin dihapus : ", input);
+                if (database.isWisataAdaById(idWisataHapus)) {
+                    database.deleteFavorite(this.ID, idWisataHapus);
+                    System.out.println("Favorit dihapus");
+                } else {
+                    System.out.println("Id tidak ada dalam favorit");
+                }
                 break;
             case "0":
                 break;
