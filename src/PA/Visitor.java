@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Visitor implements Login {
+public class Visitor implements User {
     static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     static Database database = new Database();
     private int ID;
@@ -43,16 +43,24 @@ public class Visitor implements Login {
         System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
         System.out.println("========================================================================================================================================");
         database.dataWisata();
-        System.out.print("Masukkan id : ");
         int id = 0;
         while (inputSalah) {
             try {
+                System.out.print("Masukkan id : ");
                 id = Integer.parseInt(input.readLine());
+
+                // cek id ada apa nggak
+                if (database.isWisataTidakAdaById(id)) {
+                    System.out.println("Data wisata tidak ada");
+                    continue;
+                }
+
                 inputSalah = false;
             } catch (Exception e) {
                 System.out.println("Id salah");
             }
         }
+
         System.out.println();
         double rating = Main.cekInputRentang("Nilai tempat wisata rentang 1.0 - 5.0 : ", input);
         double ratingSaatIni = database.getWisataRatingById(id);
@@ -74,6 +82,7 @@ public class Visitor implements Login {
         }
     }
 
+    @Override
     public void menu() throws IOException {
         while (true) {
             System.out.println("+-------------------------------------------------------+");
@@ -87,53 +96,54 @@ public class Visitor implements Login {
             System.out.println("--------------------------------------------------------|");
             System.out.print("Pilih :");
             String pi = input.readLine();
-            switch (pi) {
-                case "1" -> {
-                    System.out.println("========================================================================================================================================");
-                    System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
-                    System.out.println("========================================================================================================================================");
-                    database.dataWisata();
-                }
-                case "2" -> {
-                    System.out.println("+--------------------------------------------------------+");
-                    System.out.println("|-----------   LIHAT DATA TEMPAT WISATA    --------------|");
-                    System.out.println("+--------------------------------------------------------+");
-                    System.out.println("                1. Lihat Data Pantai                     |");
-                    System.out.println("                2. Lihat Data Kebun Binatang             |");
-                    System.out.println("                3. Lihat Data Hutan                      |");
-                    System.out.println("                4. Kembali                               |");
-                    System.out.println("---------------------------------------------------------|");
-                    System.out.print("Pilih :");
-                    String pil = input.readLine();
-                    switch (pil) {
-                        case "1" -> {
-                            System.out.println("========================================================================================================================================");
-                            System.out.println("|                                                    LIST SELURUH PANTAI                                                                |");
-                            System.out.println("========================================================================================================================================");
-                            database.readPantai();
-                        }
-                        case "2" -> {
-                            System.out.println("========================================================================================================================================");
-                            System.out.println("|                                                    LIST SELURUH KEBUN BINATANG                                                        |");
-                            System.out.println("========================================================================================================================================");
-                            database.readKebun();
-                        }
-                        case "3" -> {
-                            System.out.println("========================================================================================================================================");
-                            System.out.println("|                                                    LIST SELURUH HUTAN                                                                 |");
-                            System.out.println("========================================================================================================================================");
-                            database.readHutan();
-                        }
-                        case "4" -> {
-                            menu();
-                            System.out.println("Menu Visitor!!");
-                        }
-                    }
-                }
-                case "3" -> menuLihat();
-                case "4" -> MenuFavorite();
-            }
+            if (pi.equals("1")) {
+                System.out.println("========================================================================================================================================");
+                System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");
+                System.out.println("========================================================================================================================================");
+                database.dataWisata();
+            } else if (pi.equals("2")) {
+                System.out.println("+--------------------------------------------------------+");
+                System.out.println("|-----------   LIHAT DATA TEMPAT WISATA    --------------|");
+                System.out.println("+--------------------------------------------------------+");
+                System.out.println("                1. Lihat Data Pantai                     |");
+                System.out.println("                2. Lihat Data Kebun Binatang             |");
+                System.out.println("                3. Lihat Data Hutan                      |");
+                System.out.println("                4. Kembali                               |");
+                System.out.println("---------------------------------------------------------|");
+                System.out.print("Pilih :");
+                String pil = input.readLine();
 
+                if (pil.equals("1")) {
+                    System.out.println("========================================================================================================================================");
+                    System.out.println("|                                                    LIST SELURUH PANTAI                                                                |");
+                    System.out.println("========================================================================================================================================");
+                    database.readPantai();
+                } else if (pil.equals("2")) {
+                    System.out.println("========================================================================================================================================");
+                    System.out.println("|                                                    LIST SELURUH KEBUN BINATANG                                                        |");
+                    System.out.println("========================================================================================================================================");
+                    database.readKebun();
+                } else if (pil.equals("3")) {
+                    System.out.println("========================================================================================================================================");
+                    System.out.println("|                                                    LIST SELURUH HUTAN                                                                 |");
+                    System.out.println("========================================================================================================================================");
+                    database.readHutan();
+                } else if (pil.equals("4")) {
+                    menu();
+                    System.out.println("Menu Visitor!!");
+                }
+
+            } else if (pi.equals("3")) {
+                menuLihat();
+            } else if (pi.equals("4")) {
+                MenuFavorite();
+            } else if (pi.equals("5")) {
+                return;
+            } else {
+                System.out.println();
+                System.out.println("Menu Tidak Ada");
+                System.out.println();
+            }
         }
     }
 
@@ -166,19 +176,15 @@ public class Visitor implements Login {
                 break;
             case "2":
                 database.readUserFavorite(this.ID);
-
-
                 break;
             case "3":
-                System.out.println("\n");
-                System.out.println("+----------------------------------------------+");
-                System.out.println("|-----------     HAPUS DATA FAVORITE    --------|");
-                System.out.println("+-----------------------------------------------+");
-                int id_Hapus = cekInputAngka("Masukkan ID yang Ingin Di Hapus  : ", input, "ID Harus Angka");
-                database.deleteFavorite(id_Hapus);
+                database.deleteFavorite(this.ID);
+                System.out.println("Favorit dihapus");
                 break;
             case "0":
                 break;
+            default:
+                System.out.println("Menu Tidak Ada");
         }
     }
 
@@ -212,14 +218,5 @@ public class Visitor implements Login {
 
     public void setNama(String nama) {
         this.nama = nama;
-    }
-
-    @Override
-    public void masuk() {
-        System.out.println("Anjay Masuk");
-    }
-
-    public void keluar() {
-        System.out.println("Anjay Keluar");
     }
 }

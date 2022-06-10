@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class Database {
 
-    protected final String url = "jdbc:sqlite:wisata.db";
-    protected PreparedStatement pst;
-    protected Connection c;
-    protected ResultSet rs;
-    protected Statement stm;
-    protected String sql;
+    private boolean isEmpty = true;
+    private PreparedStatement pst;
+    private Connection c;
+    private ResultSet rs;
+    private Statement stm;
+    private String sql;
 
     public boolean isDatabaseExists(String dbFilePath) {
         File database = new File(dbFilePath);
@@ -25,6 +25,7 @@ public class Database {
         String jalurAbsolutFile = dapatkanJalurFile.concat("/wisata.db");
         if (isDatabaseExists(jalurAbsolutFile)) {
             try {
+                String url = "jdbc:sqlite:wisata.db";
                 c = DriverManager.getConnection(url);
                 //System.out.println("Yey");
             } catch (SQLException e) {
@@ -64,36 +65,6 @@ public class Database {
         }
     }
 
-    public ArrayList<Wisata> getDataWisata() {
-        ArrayList<Wisata> wisata = new ArrayList<>();
-        try {
-            sql = "SELECT * FROM wisata ";
-            Connection cn = getKoneksi();
-            pst = cn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                if (rs.getString(7).equals("pantai")) {
-                    wisata.add(new Pantai(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-                } else if (rs.getString(7).equals("kebun_binatang")) {
-                    wisata.add(new KebunBinatang(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-                } else if (rs.getString(7).equals("hutan")) {
-                    wisata.add(new Hutan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-                }
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Yoo error cok");
-        } finally {
-            try {
-                pst.close();
-            } catch (SQLException e) {
-                System.out.println("Error" + e);
-            }
-        }
-
-        return wisata;
-    }
-
     public void dataWisata() {
         try {
             sql = "SELECT * FROM wisata ";
@@ -106,9 +77,14 @@ public class Database {
             System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
             while (rs.next()) {
+                isEmpty = false;
 
                 System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
 
+            }
+
+            if (isEmpty) {
+                System.out.println("Data tidak ada");
             }
         } catch (SQLException e) {
             System.out.println("Yoo error cok" + e);
@@ -177,9 +153,14 @@ public class Database {
             System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
             while (rs.next()) {
+                isEmpty = false;
 
                 System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
 
+            }
+
+            if (isEmpty) {
+                System.out.println("Data tidak ada");
             }
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
@@ -204,9 +185,13 @@ public class Database {
             System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
             while (rs.next()) {
-
+                isEmpty = false;
                 System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
 
+            }
+
+            if (isEmpty) {
+                System.out.println("Data tidak ada");
             }
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
@@ -231,9 +216,14 @@ public class Database {
             System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
             while (rs.next()) {
+                isEmpty = false;
 
                 System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
 
+            }
+
+            if (isEmpty) {
+                System.out.println("Data tidak ada");
             }
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
@@ -257,9 +247,13 @@ public class Database {
             System.out.format("| ID | Nama                      | Username       | Password      |%n");
             System.out.format("+----+---------------------------+---------------+----------------+%n");
             while (rs.next()) {
-
+                isEmpty = false;
                 System.out.format(tabl, rs.getInt(1), rs.getString(4), rs.getString(2), rs.getInt(3));
 
+            }
+
+            if (isEmpty) {
+                System.out.println("Data tidak ada");
             }
         } catch (SQLException e) {
             System.out.println("Yoo error cok");
@@ -385,9 +379,12 @@ public class Database {
             System.out.format("| ID | Nama                      | Tempat        | Harga          | Rating  | Deskripsi               | Jenis        |  Special        |%n");
             System.out.format("+----+---------------------------+---------------+----------------+---------+-------------------------+--------------+-----------------+%n");
             while (rs.next()) {
-
+                isEmpty = false;
                 System.out.format(tabl, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8));
 
+            }
+            if (isEmpty) {
+                System.out.println("Data tidak ada");
             }
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
@@ -402,10 +399,26 @@ public class Database {
             pst = cn.prepareStatement(sql);
             pst.setInt(1, id);
             pst.execute();
-            System.out.println();
-            System.out.println("Berhasil di hapus!");
         } catch (SQLException ex) {
             System.out.println("erorrrrrrrr" + ex);
         }
+    }
+
+    public boolean isWisataTidakAdaById(int id) {
+        boolean ada = false;
+        try {
+            sql = "SELECT * FROM wisata WHERE id = ?";
+            Connection cn = getKoneksi();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                ada = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
+        }
+        return !ada;
     }
 }
