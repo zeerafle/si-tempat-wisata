@@ -21,8 +21,7 @@ public class Database {
     // menghubungkan ke database
     public Connection getKoneksi() {
         String dapatkanJalurFile = new File("").getAbsolutePath();
-//        String jalurAbsolutFile = dapatkanJalurFile.concat("\\wisata.db");
-        String jalurAbsolutFile = dapatkanJalurFile.concat("/wisata.db");
+        String jalurAbsolutFile = dapatkanJalurFile.concat(File.separator).concat("wisata.db");
         if (isDatabaseExists(jalurAbsolutFile)) {
             try {
                 String url = "jdbc:sqlite:wisata.db";
@@ -235,7 +234,7 @@ public class Database {
         }
     }
 
-    public void DataUser() {
+    public void dataUser() {
         try {
             sql = "SELECT * FROM User ";
             Connection cn = getKoneksi();

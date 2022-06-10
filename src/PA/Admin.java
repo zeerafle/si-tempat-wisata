@@ -1,4 +1,5 @@
-package PA;/*
+package PA;
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -156,7 +157,7 @@ public class Admin implements User {
                         System.out.println("========================================================================================================================================");
                         System.out.println("|                                                    LIST SELURUH USER                                                                |");
                         System.out.println("========================================================================================================================================");
-                        database.DataUser();
+                        database.dataUser();
                     } else if (pil.equals("2")) {
                         System.out.println("========================================================================================================================================");
                         System.out.println("|                                                    LIST SELURUH TEMPAT WISATA                                                         |");

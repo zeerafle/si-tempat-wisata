@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class Visitor implements User {
     static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     static Database database = new Database();
-    private int ID;
+    private final int ID;
     private String username;
     private String password;
     private String nama;
@@ -148,10 +148,6 @@ public class Visitor implements User {
 
     public int getID() {
         return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     public String getUsername() {

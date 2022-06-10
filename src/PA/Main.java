@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         InputStreamReader prepare = new InputStreamReader(System.in);
         BufferedReader input = new BufferedReader(prepare);
-        Admin admin = new Admin("Kitsu", "Anjay123");
+        Admin admin = new Admin("admin", "admin");
         Database database = new Database();
         ArrayList<Visitor> dataVisitor = database.getDataAkun();
 
